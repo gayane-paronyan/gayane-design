@@ -1,1 +1,337 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Personal Finance Tutorials — Budget • Save • Invest</title>
+<meta name="description" content="Minimal, professional tutorials on budgeting, saving, investing, with templates and calculators." />
+<style>
+  :root{
+    --bg:#f7f9fb; --card:#ffffff; --muted:#6b7280; --accent:#0f766e; --accent-2:#065f46;
+    --glass: rgba(15,118,110,0.06);
+    --radius:12px; --gap:16px; --maxw:980px;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    color:#0f172a;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:linear-gradient(180deg,#f7fbfb 0%, #f3f6f8 100%);display:flex;justify-content:center;padding:28px 16px;}
+  .wrap{width:100%;max-width:var(--maxw)}
+  header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+  .brand{display:flex;gap:12px;align-items:center}
+  .logo{
+    width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:18px;box-shadow:0 6px 18px rgba(6,95,70,0.12)
+  }
+  .brand h1{font-size:16px;margin:0}
+  nav{display:flex;gap:12px}
+  nav a{color:var(--muted);text-decoration:none;font-size:14px;padding:8px;border-radius:8px}
+  nav a:hover{background:var(--glass);color:var(--accent-2)}
+  /* Hero */
+  .hero{display:grid;grid-template-columns:1fr;gap:16px;background:var(--card);padding:22px;border-radius:var(--radius);box-shadow:0 8px 30px rgba(15,23,42,0.05)}
+  .hero-inner{display:flex;flex-direction:column;gap:10px}
+  .title{font-size:22px;margin:0;color:#072b2a}
+  .subtitle{margin:0;color:var(--muted);font-size:14px}
+  .cta-row{display:flex;gap:10px;flex-wrap:wrap}
+  .btn{background:var(--accent);color:#fff;padding:10px 12px;border-radius:10px;border:none;cursor:pointer;font-weight:600;font-size:14px;box-shadow:0 6px 18px rgba(15,118,110,0.12)}
+  .btn.secondary{background:transparent;color:var(--accent-2);border:1px solid rgba(6,95,70,0.08)}
+  .hero-meta{display:flex;gap:12px;color:var(--muted);font-size:13px;flex-wrap:wrap}
+  /* Grid of sections */
+  main{display:grid;grid-template-columns:1fr 340px;gap:18px;margin-top:18px}
+  @media (max-width:920px){main{grid-template-columns:1fr} .sidebar{order:2}}
+  .card{background:var(--card);padding:16px;border-radius:12px;box-shadow:0 6px 20px rgba(15,23,42,0.04)}
+  h2{margin:0 0 10px 0;font-size:16px}
+  p{margin:0;color:var(--muted);line-height:1.45}
+  .section{margin-bottom:14px}
+  .benefits{display:flex;gap:10px;flex-wrap:wrap}
+  .benefit{flex:1 1 160px;background:linear-gradient(180deg, rgba(6,95,70,0.03), transparent);padding:12px;border-radius:10px;min-width:120px}
+  .benefit h4{margin:0 0 6px 0;font-size:14px}
+  /* Templates list */
+  .templates{display:flex;flex-direction:column;gap:10px}
+  .tpl{display:flex;align-items:center;justify-content:space-between;padding:10px;border-radius:10px;border:1px solid rgba(15,23,42,0.04)}
+  .tpl a{color:var(--accent-2);text-decoration:none;font-weight:600}
+  .tpl a:hover{opacity:0.9;transform:translateY(-2px)}
+  /* calculators */
+  .calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media (max-width:720px){.calc-grid{grid-template-columns:1fr}}
+  label{font-size:13px;color:var(--muted);display:block;margin-bottom:6px}
+  input[type=number], input[type=text], select{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(15,23,42,0.06);background:#fff;font-size:14px}
+  .small{font-size:13px;color:var(--muted)}
+  .result{margin-top:8px;padding:10px;border-radius:8px;background:linear-gradient(180deg, rgba(15,118,110,0.03), transparent);font-weight:700}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:8px;border-bottom:1px dashed rgba(15,23,42,0.04);text-align:right}
+  th:first-child,td:first-child{text-align:left}
+  /* sidebar */
+  .sidebar{display:flex;flex-direction:column;gap:12px}
+  .mini-chart{height:110px;display:flex;align-items:center;justify-content:center}
+  /* footer */
+  footer{margin-top:18px;text-align:center;color:var(--muted);font-size:13px}
+  a.inline{color:var(--accent-2);text-decoration:none}
+  /* subtle hover */
+  .card:hover{transform:translateY(-4px);transition:transform 180ms ease}
+  .tpl, .card{transition:all 180ms ease}
+  /* compact */
+  .muted-sm{font-size:13px;color:var(--muted)}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo">PF</div>
+        <div>
+          <h1 style="font-size:14px;margin-bottom:2px">Personal Finance Tutorials</h1>
+          <div class="muted-sm">Budget • Save • Invest — Practical templates & calculators</div>
+        </div>
+      </div>
+      <nav>
+        <a href="#foundations">Foundations</a>
+        <a href="#tools">Tools</a>
+        <a href="#investing">Investing</a>
+        <a href="#debt">Debt</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <div style="display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap">
+          <div>
+            <h2 class="title">Build confident money habits — clear, practical tutorials & tools</h2>
+            <p class="subtitle">Step-by-step budgeting, emergency funds, simple investing basics, downloadable templates, and calculators you can use today.</p>
+            <div class="hero-meta" style="margin-top:10px">
+              <div>Minimal design • Mobile-first • Downloadable templates</div>
+            </div>
+          </div>
+          <div class="cta-row">
+            <button class="btn" onclick="document.getElementById('tools').scrollIntoView({behavior:'smooth'})">Get templates</button>
+            <button class="btn secondary" onclick="document.getElementById('foundations').scrollIntoView({behavior:'smooth'})">Start learning</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main>
+      <div>
+        <!-- About + Benefits -->
+        <section class="card section" id="foundations">
+          <h2>Foundations — budgeting, emergency funds, basics</h2>
+          <p style="margin-top:8px">Clear prioritized lessons: set a budget, build a 3–6 month emergency fund, and align short-term goals. Focus on simple, repeatable steps you can use each month.</p>
+          <div style="margin-top:12px" class="benefits">
+            <div class="benefit">
+              <h4>Monthly Budget</h4>
+              <div class="muted-sm">Zero-based & 50/30/20 templates + tracking tips</div>
+            </div>
+            <div class="benefit">
+              <h4>Emergency Fund</h4>
+              <div class="muted-sm">How much to save, prioritization strategy</div>
+            </div>
+            <div class="benefit">
+              <h4>Goal Planning</h4>
+              <div class="muted-sm">Short- and long-term savings plans</div>
+            </div>
+            <div class="benefit">
+              <h4>Monthly Review</h4>
+              <div class="muted-sm">Simple review checklist & metrics</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Investing -->
+        <section class="card section" id="investing">
+          <h2>Investing 101</h2>
+          <p style="margin-top:8px">Intro to low-cost index investing, asset allocation, tax-advantaged accounts, and a few simple rules: diversify, keep costs low, and stay consistent.</p>
+          <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap">
+            <div style="flex:1;min-width:180px">
+              <h4 style="margin:0 0 6px 0">Core Concepts</h4>
+              <p class="muted-sm" style="margin:0">Index funds, bonds vs stocks, risk tolerance, rebalancing basics.</p>
+            </div>
+            <div style="flex:1;min-width:180px">
+              <h4 style="margin:0 0 6px 0">Starter Portfolio</h4>
+              <p class="muted-sm" style="margin:0">Sample allocations for conservative, balanced, and growth-minded investors.</p>
+            </div>
+          </div>
+          <div style="margin-top:12px">
+            <svg id="assetPie" width="100%" height="160" viewBox="0 0 400 160" class="mini-chart" aria-hidden="true"></svg>
+          </div>
+        </section>
+
+        <!-- Debt Repayment -->
+        <section class="card section" id="debt">
+          <h2>Debt Repayment Strategies & Calculator</h2>
+          <p style="margin-top:8px" class="muted-sm">Compare snowball vs avalanche, prioritize high-interest debt, and see amortization schedules.</p>
+
+          <div style="margin-top:12px" class="calc-grid">
+            <div>
+              <label>Loan amount (principal)</label>
+              <input id="loanAmt" type="number" min="0" step="0.01" value="12000">
+            </div>
+            <div>
+              <label>Interest rate (annual %)</label>
+              <input id="loanRate" type="number" min="0" step="0.01" value="7.5">
+            </div>
+            <div>
+              <label>Term (months)</label>
+              <input id="loanTerm" type="number" min="1" step="1" value="48">
+            </div>
+            <div>
+              <label>Monthly extra payment</label>
+              <input id="loanExtra" type="number" min="0" step="0.01" value="50">
+            </div>
+          </div>
+
+          <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;align-items:center">
+            <button class="btn" onclick="calcLoan()">Calculate</button>
+            <div id="loanSummary" class="result" style="display:inline-block">Monthly: — • Total paid: — • Interest: —</div>
+          </div>
+
+          <div style="margin-top:12px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+              <h4 style="margin:0">Amortization schedule</h4>
+              <button class="btn secondary" onclick="downloadAmort()">Download CSV</button>
+            </div>
+            <div style="max-height:220px;overflow:auto;border-radius:8px;padding:6px;border:1px solid rgba(15,23,42,0.03)">
+              <table id="amortTable">
+                <thead><tr><th>Month</th><th>Payment</th><th>Principal</th><th>Interest</th><th>Balance</th></tr></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- Tools & Templates -->
+        <section class="card section" id="tools">
+          <h2>Tools & Templates</h2>
+          <p class="muted-sm" style="margin-top:6px">Download simple, ready-to-use spreadsheets compatible with Excel/Sheets. Use them to track your budget, savings goals, and debt.</p>
+          <div class="templates" style="margin-top:12px">
+            <div class="tpl">
+              <div>
+                <strong>Monthly Budget (CSV)</strong>
+                <div class="small muted-sm">Income, categories, targets</div>
+              </div>
+              <div><a href="#" onclick="downloadCSV('budget')">Download</a></div>
+            </div>
+
+            <div class="tpl">
+              <div>
+                <strong>Savings Goal Tracker (CSV)</strong>
+                <div class="small muted-sm">Target, progress, monthly contribution</div>
+              </div>
+              <div><a href="#" onclick="downloadCSV('savings')">Download</a></div>
+            </div>
+
+            <div class="tpl">
+              <div>
+                <strong>Debt Tracker (CSV)</strong>
+                <div class="small muted-sm">Balances, rates, minimums</div>
+              </div>
+              <div><a href="#" onclick="downloadCSV('debt')">Download</a></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Real-life case study -->
+        <section class="card section">
+          <h2>Real-life Case Study</h2>
+          <p class="muted-sm" style="margin-top:8px">Learn from a step-by-step example: a combined strategy using a 50/30/20 budget, a 6-month emergency fund plan, and using extra payments to clear a credit card first.</p>
+        </section>
+
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="card">
+          <h2>Quick Savings Calculator</h2>
+          <div style="margin-top:10px">
+            <label>Current savings</label><input id="svCurr" type="number" value="2000" step="1">
+            <label style="margin-top:8px">Monthly contribution</label><input id="svMonthly" type="number" value="300" step="1">
+            <label style="margin-top:8px">Annual return (%)</label><input id="svRate" type="number" value="4" step="0.1">
+            <label style="margin-top:8px">Years</label><input id="svYears" type="number" value="5" step="1">
+            <div style="margin-top:10px;display:flex;gap:8px">
+              <button class="btn" onclick="calcSavings()">Compute</button>
+              <button class="btn secondary" onclick="resetSavings()">Reset</button>
+            </div>
+            <div id="svResult" class="result" style="display:block;margin-top:10px">Future value: —</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Portfolio Snapshot</h2>
+          <p class="muted-sm" style="margin-top:6px">Adjust allocation to preview balance</p>
+          <div style="display:flex;gap:8px;margin-top:10px">
+            <div style="flex:1">
+              <label>Stocks %</label>
+              <input id="allocStocks" type="number" min="0" max="100" value="70" step="1">
+            </div>
+            <div style="flex:1">
+              <label>Bonds %</label>
+              <input id="allocBonds" type="number" min="0" max="100" value="30" step="1">
+            </div>
+          </div>
+          <div style="margin-top:10px;display:flex;gap:8px">
+            <button class="btn" onclick="drawAllocation()">Update</button>
+            <button class="btn secondary" onclick="resetAllocation()">Reset</button>
+          </div>
+          <div style="margin-top:12px">
+            <svg id="allocChart" width="100%" height="120" viewBox="0 0 400 120" aria-hidden="true"></svg>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>About</h2>
+          <p class="muted-sm" style="margin-top:8px">A compact, practical guide designed to help you form repeatable money habits. Use the templates, run the calculators, and follow the step-by-step lessons.</p>
+        </div>
+      </aside>
+    </main>
+
+    <footer>
+      <div style="max-width:var(--maxw);margin:18px auto 0">Made with care • Minimal, mobile-first • <a class="inline" href="#">GitHub Page template</a></div>
+    </footer>
+  </div>
+
+<script>
+/* Utility: CSV downloads for templates */
+function downloadCSV(type){
+  let filename = 'template.csv', csv='';
+  if(type==='budget'){
+    filename='monthly-budget.csv';
+    csv = 'Category,Planned,Actual,Notes\nIncome,5000,,\nHousing,1200,,\nGroceries,400,,\nTransport,150,,\nSavings,1000,,\nEntertainment,200,,\nOther,0,,\n';
+  } else if(type==='savings'){
+    filename='savings-goal.csv';
+    csv = 'Goal,Target Amount,Current,Monthly Contribution,Target Date,Notes\nVacation,5000,800,200,2026-12-01,\nEmergency Fund,6000,2000,300,2026-10-01,\n';
+  } else if(type==='debt'){
+    filename='debt-tracker.csv';
+    csv = 'Account,Balance,Interest Rate (%),Minimum Payment,Notes\nCredit Card,4200,18.9,120,\nStudent Loan,12000,5.0,120,\n';
+  }
+  const blob = new Blob([csv], {type:'text/csv'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename; document.body.appendChild(a); a.click();
+  a.remove(); URL.revokeObjectURL(url);
+}
+
+/* Savings calculator (future value with monthly contributions) */
+function calcSavings(){
+  const pv = parseFloat(document.getElementById('svCurr').value) || 0;
+  const m = parseFloat(document.getElementById('svMonthly').value) || 0;
+  const r = (parseFloat(document.getElementById('svRate').value) || 0)/100;
+  const years = parseFloat(document.getElementById('svYears').value) || 0;
+  const periods = years*12;
+  const monthlyRate = r/12;
+  const fv = pv * Math.pow(1+monthlyRate, periods) + m * ( (Math.pow(1+monthlyRate, periods)-1)/monthlyRate );
+  document.getElementById('svResult').textContent = 'Future value: ' + fv.toLocaleString(undefined,{style:'currency',currency:'USD',maximumFractionDigits:0});
+}
+
+/* Reset savings inputs */
+function resetSavings(){
+  document.getElementById('svCurr').value=2000;
+  document.getElementById('svMonthly').value=300;
+  document.getElementById('svRate').value=4;
+  document.getElementById('svYears').value=5;
+  document.getElementById('svResult').textContent='Future value: —';
+}
+
+/* Loan amortization with optional extra monthly payment */
+function calcLoan(){
+  const P = parseFloat(document.getElementById('loanAmt').value) || 0;
+  const annual = parseFloat(document.getElementById('loanRate').value) || 0;
+  const n = parseInt(document.getElementById('
 
