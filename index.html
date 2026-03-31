@@ -1,337 +1,690 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Personal Finance Tutorials — Budget • Save • Invest</title>
-<meta name="description" content="Minimal, professional tutorials on budgeting, saving, investing, with templates and calculators." />
+<title>Finwise — Budget • Save • Invest | Personal Finance Dashboard</title>
+<meta name="description" content="Professional finance toolkit: tutorials, calculators, templates, portfolio monitor, and smart insights." />
 <style>
-  :root{
-    --bg:#f7f9fb; --card:#ffffff; --muted:#6b7280; --accent:#0f766e; --accent-2:#065f46;
-    --glass: rgba(15,118,110,0.06);
-    --radius:12px; --gap:16px; --maxw:980px;
-    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-    color:#0f172a;
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
   }
-  *{box-sizing:border-box}
-  body{margin:0;background:linear-gradient(180deg,#f7fbfb 0%, #f3f6f8 100%);display:flex;justify-content:center;padding:28px 16px;}
-  .wrap{width:100%;max-width:var(--maxw)}
-  header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
-  .brand{display:flex;gap:12px;align-items:center}
-  .logo{
-    width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));
-    display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:18px;box-shadow:0 6px 18px rgba(6,95,70,0.12)
+
+  :root {
+    --bg: #f4f7fc;
+    --card: #ffffff;
+    --muted: #4b5563;
+    --muted-light: #6c757d;
+    --primary: #0f766e;
+    --primary-dark: #0b5e57;
+    --secondary: #f97316;
+    --secondary-dark: #ea580c;
+    --accent-blue: #3b82f6;
+    --accent-purple: #8b5cf6;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --glass: rgba(15, 118, 110, 0.06);
+    --radius-xl: 20px;
+    --radius-lg: 16px;
+    --radius-md: 12px;
+    --shadow: 0 12px 30px rgba(0, 0, 0, 0.05), 0 4px 8px rgba(0, 0, 0, 0.02);
+    --shadow-hover: 0 20px 35px -10px rgba(15, 118, 110, 0.15);
+    --font: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   }
-  .brand h1{font-size:16px;margin:0}
-  nav{display:flex;gap:12px}
-  nav a{color:var(--muted);text-decoration:none;font-size:14px;padding:8px;border-radius:8px}
-  nav a:hover{background:var(--glass);color:var(--accent-2)}
-  /* Hero */
-  .hero{display:grid;grid-template-columns:1fr;gap:16px;background:var(--card);padding:22px;border-radius:var(--radius);box-shadow:0 8px 30px rgba(15,23,42,0.05)}
-  .hero-inner{display:flex;flex-direction:column;gap:10px}
-  .title{font-size:22px;margin:0;color:#072b2a}
-  .subtitle{margin:0;color:var(--muted);font-size:14px}
-  .cta-row{display:flex;gap:10px;flex-wrap:wrap}
-  .btn{background:var(--accent);color:#fff;padding:10px 12px;border-radius:10px;border:none;cursor:pointer;font-weight:600;font-size:14px;box-shadow:0 6px 18px rgba(15,118,110,0.12)}
-  .btn.secondary{background:transparent;color:var(--accent-2);border:1px solid rgba(6,95,70,0.08)}
-  .hero-meta{display:flex;gap:12px;color:var(--muted);font-size:13px;flex-wrap:wrap}
-  /* Grid of sections */
-  main{display:grid;grid-template-columns:1fr 340px;gap:18px;margin-top:18px}
-  @media (max-width:920px){main{grid-template-columns:1fr} .sidebar{order:2}}
-  .card{background:var(--card);padding:16px;border-radius:12px;box-shadow:0 6px 20px rgba(15,23,42,0.04)}
-  h2{margin:0 0 10px 0;font-size:16px}
-  p{margin:0;color:var(--muted);line-height:1.45}
-  .section{margin-bottom:14px}
-  .benefits{display:flex;gap:10px;flex-wrap:wrap}
-  .benefit{flex:1 1 160px;background:linear-gradient(180deg, rgba(6,95,70,0.03), transparent);padding:12px;border-radius:10px;min-width:120px}
-  .benefit h4{margin:0 0 6px 0;font-size:14px}
-  /* Templates list */
-  .templates{display:flex;flex-direction:column;gap:10px}
-  .tpl{display:flex;align-items:center;justify-content:space-between;padding:10px;border-radius:10px;border:1px solid rgba(15,23,42,0.04)}
-  .tpl a{color:var(--accent-2);text-decoration:none;font-weight:600}
-  .tpl a:hover{opacity:0.9;transform:translateY(-2px)}
-  /* calculators */
-  .calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-  @media (max-width:720px){.calc-grid{grid-template-columns:1fr}}
-  label{font-size:13px;color:var(--muted);display:block;margin-bottom:6px}
-  input[type=number], input[type=text], select{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(15,23,42,0.06);background:#fff;font-size:14px}
-  .small{font-size:13px;color:var(--muted)}
-  .result{margin-top:8px;padding:10px;border-radius:8px;background:linear-gradient(180deg, rgba(15,118,110,0.03), transparent);font-weight:700}
-  table{width:100%;border-collapse:collapse;font-size:13px}
-  th,td{padding:8px;border-bottom:1px dashed rgba(15,23,42,0.04);text-align:right}
-  th:first-child,td:first-child{text-align:left}
-  /* sidebar */
-  .sidebar{display:flex;flex-direction:column;gap:12px}
-  .mini-chart{height:110px;display:flex;align-items:center;justify-content:center}
-  /* footer */
-  footer{margin-top:18px;text-align:center;color:var(--muted);font-size:13px}
-  a.inline{color:var(--accent-2);text-decoration:none}
-  /* subtle hover */
-  .card:hover{transform:translateY(-4px);transition:transform 180ms ease}
-  .tpl, .card{transition:all 180ms ease}
-  /* compact */
-  .muted-sm{font-size:13px;color:var(--muted)}
+
+  body {
+    background: linear-gradient(145deg, #edf2f7 0%, #f9fafb 100%);
+    font-family: var(--font);
+    color: #111827;
+    padding: 28px 20px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .container {
+    max-width: 1320px;
+    width: 100%;
+  }
+
+  /* header / nav */
+  .top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 28px;
+    background: var(--card);
+    backdrop-filter: blur(2px);
+    padding: 12px 24px;
+    border-radius: 60px;
+    box-shadow: var(--shadow);
+  }
+
+  .logo-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .logo-icon {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    width: 48px;
+    height: 48px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    box-shadow: 0 8px 18px rgba(15, 118, 110, 0.25);
+  }
+
+  .brand-text h2 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #0f766e, #2c7a6e);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+
+  .brand-text p {
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.85rem;
+    color: #2d3e50;
+    padding: 6px 12px;
+    border-radius: 40px;
+    transition: 0.2s;
+  }
+
+  .nav-links a:hover {
+    background: var(--glass);
+    color: var(--primary-dark);
+  }
+
+  /* hero section with gradient & icon */
+  .hero-card {
+    background: linear-gradient(135deg, #0f2c2a, #1b4a43);
+    border-radius: var(--radius-xl);
+    padding: 28px 32px;
+    margin-bottom: 32px;
+    color: white;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow-hover);
+  }
+
+  .hero-text h1 {
+    font-size: 1.8rem;
+    margin-bottom: 8px;
+  }
+
+  .hero-text p {
+    opacity: 0.85;
+    max-width: 500px;
+  }
+
+  .hero-badge {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(4px);
+    border-radius: 50px;
+    padding: 12px 20px;
+    display: flex;
+    gap: 12px;
+    font-weight: 500;
+  }
+
+  /* grid layout */
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 24px;
+  }
+
+  @media (max-width: 900px) {
+    .dashboard-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .card {
+    background: var(--card);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s ease, box-shadow 0.2s;
+    margin-bottom: 24px;
+  }
+
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
+  }
+
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 18px;
+    border-left: 4px solid var(--primary);
+    padding-left: 14px;
+  }
+
+  .section-title i {
+    font-size: 1.4rem;
+  }
+
+  /* stats row */
+  .stats-monitor {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .stat-item {
+    background: #f9fafc;
+    border-radius: 20px;
+    padding: 14px;
+    text-align: center;
+    border: 1px solid #eef2f6;
+  }
+
+  .stat-value {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--primary);
+  }
+
+  /* Tables */
+  .table-wrapper {
+    overflow-x: auto;
+    border-radius: var(--radius-md);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+  }
+
+  th {
+    text-align: left;
+    padding: 12px 8px;
+    background: #f1f5f9;
+    color: #1e293b;
+  }
+
+  td {
+    padding: 10px 8px;
+    border-bottom: 1px solid #e9edf2;
+  }
+
+  .trend-up {
+    color: var(--success);
+    font-weight: 600;
+  }
+
+  .trend-down {
+    color: var(--danger);
+  }
+
+  /* buttons & inputs */
+  .btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 40px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  .btn-outline {
+    background: transparent;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+  }
+
+  .btn-sm {
+    padding: 6px 12px;
+    font-size: 0.75rem;
+  }
+
+  input, select {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 14px;
+    border: 1px solid #e2e8f0;
+    background: white;
+    font-size: 0.85rem;
+  }
+
+  .calc-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 10px;
+  }
+
+  .result-badge {
+    background: #eef2ff;
+    padding: 10px;
+    border-radius: 16px;
+    margin-top: 12px;
+    font-weight: 600;
+  }
+
+  .icon-em {
+    font-size: 1.2rem;
+    vertical-align: middle;
+  }
+
+  footer {
+    margin-top: 48px;
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--muted-light);
+    border-top: 1px solid #e2e8f0;
+    padding-top: 24px;
+  }
+
+  @media (max-width: 540px) {
+    .hero-card { flex-direction: column; text-align: center; gap: 20px; }
+    .hero-text h1 { font-size: 1.5rem; }
+  }
 </style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <div class="brand">
-        <div class="logo">PF</div>
-        <div>
-          <h1 style="font-size:14px;margin-bottom:2px">Personal Finance Tutorials</h1>
-          <div class="muted-sm">Budget • Save • Invest — Practical templates & calculators</div>
-        </div>
+<div class="container">
+  <!-- Top Navigation with icons (emoji/icons) -->
+  <div class="top-bar">
+    <div class="logo-area">
+      <div class="logo-icon">📊</div>
+      <div class="brand-text">
+        <h2>Finwise<span style="font-weight:400"> |</span> Finance Hub</h2>
+        <p>Budget · Invest · Track</p>
       </div>
-      <nav>
-        <a href="#foundations">Foundations</a>
-        <a href="#tools">Tools</a>
-        <a href="#investing">Investing</a>
-        <a href="#debt">Debt</a>
-      </nav>
-    </header>
-
-    <section class="hero">
-      <div class="hero-inner">
-        <div style="display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap">
-          <div>
-            <h2 class="title">Build confident money habits — clear, practical tutorials & tools</h2>
-            <p class="subtitle">Step-by-step budgeting, emergency funds, simple investing basics, downloadable templates, and calculators you can use today.</p>
-            <div class="hero-meta" style="margin-top:10px">
-              <div>Minimal design • Mobile-first • Downloadable templates</div>
-            </div>
-          </div>
-          <div class="cta-row">
-            <button class="btn" onclick="document.getElementById('tools').scrollIntoView({behavior:'smooth'})">Get templates</button>
-            <button class="btn secondary" onclick="document.getElementById('foundations').scrollIntoView({behavior:'smooth'})">Start learning</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <main>
-      <div>
-        <!-- About + Benefits -->
-        <section class="card section" id="foundations">
-          <h2>Foundations — budgeting, emergency funds, basics</h2>
-          <p style="margin-top:8px">Clear prioritized lessons: set a budget, build a 3–6 month emergency fund, and align short-term goals. Focus on simple, repeatable steps you can use each month.</p>
-          <div style="margin-top:12px" class="benefits">
-            <div class="benefit">
-              <h4>Monthly Budget</h4>
-              <div class="muted-sm">Zero-based & 50/30/20 templates + tracking tips</div>
-            </div>
-            <div class="benefit">
-              <h4>Emergency Fund</h4>
-              <div class="muted-sm">How much to save, prioritization strategy</div>
-            </div>
-            <div class="benefit">
-              <h4>Goal Planning</h4>
-              <div class="muted-sm">Short- and long-term savings plans</div>
-            </div>
-            <div class="benefit">
-              <h4>Monthly Review</h4>
-              <div class="muted-sm">Simple review checklist & metrics</div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Investing -->
-        <section class="card section" id="investing">
-          <h2>Investing 101</h2>
-          <p style="margin-top:8px">Intro to low-cost index investing, asset allocation, tax-advantaged accounts, and a few simple rules: diversify, keep costs low, and stay consistent.</p>
-          <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap">
-            <div style="flex:1;min-width:180px">
-              <h4 style="margin:0 0 6px 0">Core Concepts</h4>
-              <p class="muted-sm" style="margin:0">Index funds, bonds vs stocks, risk tolerance, rebalancing basics.</p>
-            </div>
-            <div style="flex:1;min-width:180px">
-              <h4 style="margin:0 0 6px 0">Starter Portfolio</h4>
-              <p class="muted-sm" style="margin:0">Sample allocations for conservative, balanced, and growth-minded investors.</p>
-            </div>
-          </div>
-          <div style="margin-top:12px">
-            <svg id="assetPie" width="100%" height="160" viewBox="0 0 400 160" class="mini-chart" aria-hidden="true"></svg>
-          </div>
-        </section>
-
-        <!-- Debt Repayment -->
-        <section class="card section" id="debt">
-          <h2>Debt Repayment Strategies & Calculator</h2>
-          <p style="margin-top:8px" class="muted-sm">Compare snowball vs avalanche, prioritize high-interest debt, and see amortization schedules.</p>
-
-          <div style="margin-top:12px" class="calc-grid">
-            <div>
-              <label>Loan amount (principal)</label>
-              <input id="loanAmt" type="number" min="0" step="0.01" value="12000">
-            </div>
-            <div>
-              <label>Interest rate (annual %)</label>
-              <input id="loanRate" type="number" min="0" step="0.01" value="7.5">
-            </div>
-            <div>
-              <label>Term (months)</label>
-              <input id="loanTerm" type="number" min="1" step="1" value="48">
-            </div>
-            <div>
-              <label>Monthly extra payment</label>
-              <input id="loanExtra" type="number" min="0" step="0.01" value="50">
-            </div>
-          </div>
-
-          <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;align-items:center">
-            <button class="btn" onclick="calcLoan()">Calculate</button>
-            <div id="loanSummary" class="result" style="display:inline-block">Monthly: — • Total paid: — • Interest: —</div>
-          </div>
-
-          <div style="margin-top:12px">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-              <h4 style="margin:0">Amortization schedule</h4>
-              <button class="btn secondary" onclick="downloadAmort()">Download CSV</button>
-            </div>
-            <div style="max-height:220px;overflow:auto;border-radius:8px;padding:6px;border:1px solid rgba(15,23,42,0.03)">
-              <table id="amortTable">
-                <thead><tr><th>Month</th><th>Payment</th><th>Principal</th><th>Interest</th><th>Balance</th></tr></thead>
-                <tbody></tbody>
-              </table>
-            </div>
-          </div>
-        </section>
-
-        <!-- Tools & Templates -->
-        <section class="card section" id="tools">
-          <h2>Tools & Templates</h2>
-          <p class="muted-sm" style="margin-top:6px">Download simple, ready-to-use spreadsheets compatible with Excel/Sheets. Use them to track your budget, savings goals, and debt.</p>
-          <div class="templates" style="margin-top:12px">
-            <div class="tpl">
-              <div>
-                <strong>Monthly Budget (CSV)</strong>
-                <div class="small muted-sm">Income, categories, targets</div>
-              </div>
-              <div><a href="#" onclick="downloadCSV('budget')">Download</a></div>
-            </div>
-
-            <div class="tpl">
-              <div>
-                <strong>Savings Goal Tracker (CSV)</strong>
-                <div class="small muted-sm">Target, progress, monthly contribution</div>
-              </div>
-              <div><a href="#" onclick="downloadCSV('savings')">Download</a></div>
-            </div>
-
-            <div class="tpl">
-              <div>
-                <strong>Debt Tracker (CSV)</strong>
-                <div class="small muted-sm">Balances, rates, minimums</div>
-              </div>
-              <div><a href="#" onclick="downloadCSV('debt')">Download</a></div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Real-life case study -->
-        <section class="card section">
-          <h2>Real-life Case Study</h2>
-          <p class="muted-sm" style="margin-top:8px">Learn from a step-by-step example: a combined strategy using a 50/30/20 budget, a 6-month emergency fund plan, and using extra payments to clear a credit card first.</p>
-        </section>
-
-      </div>
-
-      <!-- Sidebar -->
-      <aside class="sidebar">
-        <div class="card">
-          <h2>Quick Savings Calculator</h2>
-          <div style="margin-top:10px">
-            <label>Current savings</label><input id="svCurr" type="number" value="2000" step="1">
-            <label style="margin-top:8px">Monthly contribution</label><input id="svMonthly" type="number" value="300" step="1">
-            <label style="margin-top:8px">Annual return (%)</label><input id="svRate" type="number" value="4" step="0.1">
-            <label style="margin-top:8px">Years</label><input id="svYears" type="number" value="5" step="1">
-            <div style="margin-top:10px;display:flex;gap:8px">
-              <button class="btn" onclick="calcSavings()">Compute</button>
-              <button class="btn secondary" onclick="resetSavings()">Reset</button>
-            </div>
-            <div id="svResult" class="result" style="display:block;margin-top:10px">Future value: —</div>
-          </div>
-        </div>
-
-        <div class="card">
-          <h2>Portfolio Snapshot</h2>
-          <p class="muted-sm" style="margin-top:6px">Adjust allocation to preview balance</p>
-          <div style="display:flex;gap:8px;margin-top:10px">
-            <div style="flex:1">
-              <label>Stocks %</label>
-              <input id="allocStocks" type="number" min="0" max="100" value="70" step="1">
-            </div>
-            <div style="flex:1">
-              <label>Bonds %</label>
-              <input id="allocBonds" type="number" min="0" max="100" value="30" step="1">
-            </div>
-          </div>
-          <div style="margin-top:10px;display:flex;gap:8px">
-            <button class="btn" onclick="drawAllocation()">Update</button>
-            <button class="btn secondary" onclick="resetAllocation()">Reset</button>
-          </div>
-          <div style="margin-top:12px">
-            <svg id="allocChart" width="100%" height="120" viewBox="0 0 400 120" aria-hidden="true"></svg>
-          </div>
-        </div>
-
-        <div class="card">
-          <h2>About</h2>
-          <p class="muted-sm" style="margin-top:8px">A compact, practical guide designed to help you form repeatable money habits. Use the templates, run the calculators, and follow the step-by-step lessons.</p>
-        </div>
-      </aside>
-    </main>
-
-    <footer>
-      <div style="max-width:var(--maxw);margin:18px auto 0">Made with care • Minimal, mobile-first • <a class="inline" href="#">GitHub Page template</a></div>
-    </footer>
+    </div>
+    <div class="nav-links">
+      <a href="#">📘 Tutorials</a>
+      <a href="#">🧾 Templates</a>
+      <a href="#">📈 Calculators</a>
+      <a href="#">💡 Insights</a>
+    </div>
   </div>
 
+  <!-- Hero with color -->
+  <div class="hero-card">
+    <div class="hero-text">
+      <h1>💰 Master Your Money Journey</h1>
+      <p>Professional tools & smart tracking — budget like a pro, invest with clarity, monitor your net worth.</p>
+    </div>
+    <div class="hero-badge">
+      <span>⭐ 10k+ users</span>
+      <span>📉 Real-time sims</span>
+    </div>
+  </div>
+
+  <div class="dashboard-grid">
+    <!-- MAIN COLUMN -->
+    <div>
+      <!-- MONITORING TABLE: MONTHLY EXPENSE TRACKER -->
+      <div class="card">
+        <div class="section-title">
+          <i>📋</i> <span>Expense Monitoring · Real-time Tracker</span>
+        </div>
+        <div class="table-wrapper">
+          <table id="expenseTable">
+            <thead>
+              <tr><th>Category</th><th>Budget ($)</th><th>Spent ($)</th><th>Remaining ($)</th><th>Status</th></tr>
+            </thead>
+            <tbody id="expenseTbody">
+              <!-- dynamic rows -->
+            </tbody>
+          </table>
+        </div>
+        <div style="display:flex; justify-content: flex-end; margin-top: 12px;">
+          <button class="btn btn-sm" id="resetExpensesBtn">🔄 Reset Defaults</button>
+        </div>
+        <div class="result-badge" id="totalBudgetAlert"></div>
+      </div>
+
+      <!-- INVESTMENT PORTFOLIO TRACKER (Monitoring table) -->
+      <div class="card">
+        <div class="section-title">
+          <i>📈</i> <span>Investment Portfolio Monitor</span>
+        </div>
+        <div class="table-wrapper">
+          <table>
+            <thead><tr><th>Asset</th><th>Shares</th><th>Price ($)</th><th>Value ($)</th><th>Change (1M)</th></tr></thead>
+            <tbody id="portfolioTbody">
+              <tr><td>VTI (US Total)</td><td><input type="number" id="vtiShares" value="12" step="1" style="width:80px"></td><td>245.30</td><td id="vtiVal">—</td><td class="trend-up">+3.2%</td></tr>
+              <tr><td>VXUS (Intl)</td><td><input type="number" id="vxusShares" value="8" step="1" style="width:80px"></td><td>59.80</td><td id="vxusVal">—</td><td class="trend-up">+1.5%</td></tr>
+              <tr><td>BND (Bonds)</td><td><input type="number" id="bndShares" value="20" step="1" style="width:80px"></td><td>72.40</td><td id="bndVal">—</td><td class="trend-down">-0.4%</td></tr>
+              <tr><td>QQQ (Tech)</td><td><input type="number" id="qqqShares" value="5" step="1" style="width:80px"></td><td>445.20</td><td id="qqqVal">—</td><td class="trend-up">+5.1%</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="margin-top: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+          <div><strong>Total Portfolio Value: </strong><span id="totalPortfolioVal" style="font-size: 1.4rem; font-weight:800; color:#0f766e;">$0</span></div>
+          <button class="btn btn-sm" id="updatePortfolioBtn">⟳ Refresh Values</button>
+        </div>
+      </div>
+
+      <!-- TUTORIALS & TOOLS + DOWNLOADABLE -->
+      <div class="card">
+        <div class="section-title"><i>🧰</i> <span>Smart Templates & Calculators</span></div>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px;">
+          <button class="btn btn-outline" onclick="downloadCSV('budget')">📥 Monthly Budget CSV</button>
+          <button class="btn btn-outline" onclick="downloadCSV('savings')">📥 Savings Goal CSV</button>
+          <button class="btn btn-outline" onclick="downloadCSV('debt')">📥 Debt Tracker CSV</button>
+        </div>
+        <div class="calc-row">
+          <div>
+            <label>📊 Loan Snowball Sim</label>
+            <input type="number" id="loanAmt" placeholder="Principal" value="8000">
+            <input type="number" id="loanRate" placeholder="Rate %" value="6.5">
+            <input type="number" id="loanTerm" placeholder="Months" value="36">
+            <input type="number" id="loanExtra" placeholder="Extra payment" value="75">
+            <button class="btn btn-sm" style="margin-top: 8px;" onclick="calcLoanAmort()">Calculate Payment</button>
+            <div id="loanResultPreview" class="result-badge" style="margin-top:8px">Monthly: —</div>
+          </div>
+          <div>
+            <label>💰 Emergency Fund Target</label>
+            <input type="number" id="monthlyExpenses" placeholder="Monthly expenses" value="3200">
+            <select id="monthsTarget"><option value="3">3 months (minimum)</option><option value="6" selected>6 months (ideal)</option><option value="12">12 months (conservative)</option></select>
+            <button class="btn btn-sm" style="margin-top:8px;" onclick="calcEmergency()">Calculate Fund Goal</button>
+            <div id="emergencyResult" class="result-badge" style="margin-top:8px">Target: —</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SIDEBAR (COLORFUL & MONITORING) -->
+    <div>
+      <!-- Net worth snapshot & interactive -->
+      <div class="card">
+        <div class="section-title"><i>🏦</i> <span>Net Worth Snapshot</span></div>
+        <div style="display:flex; gap: 12px; justify-content: space-between;">
+          <div><span style="font-size:0.7rem;">Assets</span><br><span id="totalAssets" style="font-weight:800;">$0</span></div>
+          <div><span style="font-size:0.7rem;">Liabilities</span><br><span id="totalLiabilities" style="font-weight:800;">$0</span></div>
+          <div><span style="font-size:0.7rem;">Net Worth</span><br><span id="netWorthVal" style="font-size:1.2rem; font-weight:800; color:var(--primary);">$0</span></div>
+        </div>
+        <div style="margin-top:12px;">
+          <label>💳 Credit Card Debt</label>
+          <input type="number" id="ccDebt" value="2450" step="100" placeholder="Debt">
+          <label>🏡 Mortgage / Loan</label>
+          <input type="number" id="mortgageDebt" value="12500" step="500">
+          <button class="btn btn-sm" style="margin-top: 10px;" id="updateNetWorthBtn">Update Net Worth</button>
+        </div>
+      </div>
+
+      <!-- SAVINGS GOAL with colors -->
+      <div class="card">
+        <div class="section-title"><i>🎯</i> <span>Goal Tracker · Rainbow Progress</span></div>
+        <label>Savings Goal ($)</label>
+        <input type="number" id="goalTarget" value="10000">
+        <label>Current Saved ($)</label>
+        <input type="number" id="goalCurrent" value="3400">
+        <div style="background:#e9ecef; border-radius: 30px; margin: 12px 0; height: 14px;">
+          <div id="progressFill" style="width: 34%; background: linear-gradient(90deg, #0f766e, #f97316); height: 14px; border-radius: 30px;"></div>
+        </div>
+        <div id="goalStatusMsg" class="result-badge" style="background:#ffe8e0;">$3,400 of $10,000 (34%)</div>
+        <button class="btn btn-sm" id="updateGoalBtn">Update Progress</button>
+      </div>
+
+      <!-- Quick Allocation pie & colorful tip -->
+      <div class="card">
+        <div class="section-title"><i>🥧</i> <span>Asset Allocation Style</span></div>
+        <div style="display:flex; gap: 8px;">
+          <div style="flex:1"><label>Stocks %</label><input id="stockPct" value="65" type="number"></div>
+          <div style="flex:1"><label>Bonds %</label><input id="bondPct" value="25" type="number"></div>
+          <div style="flex:1"><label>Cash %</label><input id="cashPct" value="10" type="number"></div>
+        </div>
+        <button class="btn btn-sm" style="margin-top: 8px;" id="refreshAllocBtn">📊 Visualize</button>
+        <svg id="allocPieSvg" width="100%" height="130" viewBox="0 0 200 130" style="margin-top: 12px;"></svg>
+        <div class="muted-sm" style="font-size:12px; margin-top: 6px;">📌 Professional tip: Rebalance annually</div>
+      </div>
+    </div>
+  </div>
+  <footer>
+    ⚡ Finwise — Real-time financial monitoring | Data updates locally | Templates & tools ready for download
+  </footer>
+</div>
+
 <script>
-/* Utility: CSV downloads for templates */
-function downloadCSV(type){
-  let filename = 'template.csv', csv='';
-  if(type==='budget'){
-    filename='monthly-budget.csv';
-    csv = 'Category,Planned,Actual,Notes\nIncome,5000,,\nHousing,1200,,\nGroceries,400,,\nTransport,150,,\nSavings,1000,,\nEntertainment,200,,\nOther,0,,\n';
-  } else if(type==='savings'){
-    filename='savings-goal.csv';
-    csv = 'Goal,Target Amount,Current,Monthly Contribution,Target Date,Notes\nVacation,5000,800,200,2026-12-01,\nEmergency Fund,6000,2000,300,2026-10-01,\n';
-  } else if(type==='debt'){
-    filename='debt-tracker.csv';
-    csv = 'Account,Balance,Interest Rate (%),Minimum Payment,Notes\nCredit Card,4200,18.9,120,\nStudent Loan,12000,5.0,120,\n';
+  // 1. EXPENSE MONITORING TABLE with realistic data + update remaining
+  let expenseData = [
+    { category: "🏠 Housing", budget: 1500, spent: 1250 },
+    { category: "🍔 Food", budget: 600, spent: 430 },
+    { category: "🚗 Transport", budget: 320, spent: 290 },
+    { category: "📱 Entertainment", budget: 200, spent: 180 },
+    { category: "💡 Utilities", budget: 280, spent: 210 },
+    { category: "📚 Education", budget: 150, spent: 90 }
+  ];
+
+  function renderExpenseTable() {
+    let tbody = document.getElementById("expenseTbody");
+    tbody.innerHTML = "";
+    let totalBudget = 0, totalSpent = 0;
+    expenseData.forEach(item => {
+      let remaining = item.budget - item.spent;
+      totalBudget += item.budget;
+      totalSpent += item.spent;
+      let statusColor = remaining >= 0 ? "✅ On track" : "⚠️ Over";
+      let row = `<tr>
+        <td>${item.category}</td>
+        <td>$${item.budget.toFixed(2)}</td>
+        <td><input type="number" class="spent-input" data-cat="${item.category}" value="${item.spent}" step="10" style="width:85px;"></td>
+        <td style="font-weight:500;">$${remaining.toFixed(2)}</td>
+        <td>${statusColor}</td>
+      </tr>`;
+      tbody.insertAdjacentHTML('beforeend', row);
+    });
+    document.getElementById("totalBudgetAlert").innerHTML = `📊 Total Budget: $${totalBudget.toFixed(2)} | Total Spent: $${totalSpent.toFixed(2)} | Remaining: $${(totalBudget - totalSpent).toFixed(2)}`;
+    // attach listeners to spent inputs
+    document.querySelectorAll('.spent-input').forEach(input => {
+      input.addEventListener('change', (e) => {
+        let catName = input.getAttribute('data-cat');
+        let newVal = parseFloat(input.value) || 0;
+        let idx = expenseData.findIndex(i => i.category === catName);
+        if (idx !== -1) expenseData[idx].spent = newVal;
+        renderExpenseTable();
+        updateNetWorthFromAssets(); // refresh net worth consistency
+      });
+    });
   }
-  const blob = new Blob([csv], {type:'text/csv'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = filename; document.body.appendChild(a); a.click();
-  a.remove(); URL.revokeObjectURL(url);
-}
 
-/* Savings calculator (future value with monthly contributions) */
-function calcSavings(){
-  const pv = parseFloat(document.getElementById('svCurr').value) || 0;
-  const m = parseFloat(document.getElementById('svMonthly').value) || 0;
-  const r = (parseFloat(document.getElementById('svRate').value) || 0)/100;
-  const years = parseFloat(document.getElementById('svYears').value) || 0;
-  const periods = years*12;
-  const monthlyRate = r/12;
-  const fv = pv * Math.pow(1+monthlyRate, periods) + m * ( (Math.pow(1+monthlyRate, periods)-1)/monthlyRate );
-  document.getElementById('svResult').textContent = 'Future value: ' + fv.toLocaleString(undefined,{style:'currency',currency:'USD',maximumFractionDigits:0});
-}
+  // reset expenses
+  document.getElementById("resetExpensesBtn")?.addEventListener('click', () => {
+    expenseData = [
+      { category: "🏠 Housing", budget: 1500, spent: 1250 },
+      { category: "🍔 Food", budget: 600, spent: 430 },
+      { category: "🚗 Transport", budget: 320, spent: 290 },
+      { category: "📱 Entertainment", budget: 200, spent: 180 },
+      { category: "💡 Utilities", budget: 280, spent: 210 },
+      { category: "📚 Education", budget: 150, spent: 90 }
+    ];
+    renderExpenseTable();
+    updateNetWorthFromAssets();
+  });
 
-/* Reset savings inputs */
-function resetSavings(){
-  document.getElementById('svCurr').value=2000;
-  document.getElementById('svMonthly').value=300;
-  document.getElementById('svRate').value=4;
-  document.getElementById('svYears').value=5;
-  document.getElementById('svResult').textContent='Future value: —';
-}
+  // 2. PORTFOLIO MONITOR calculation
+  function calcPortfolio() {
+    const vtiShares = parseFloat(document.getElementById('vtiShares').value) || 0;
+    const vxusShares = parseFloat(document.getElementById('vxusShares').value) || 0;
+    const bndShares = parseFloat(document.getElementById('bndShares').value) || 0;
+    const qqqShares = parseFloat(document.getElementById('qqqShares').value) || 0;
+    const vtiPrice = 245.30, vxusPrice = 59.80, bndPrice = 72.40, qqqPrice = 445.20;
+    let vtiVal = vtiShares * vtiPrice;
+    let vxusVal = vxusShares * vxusPrice;
+    let bndVal = bndShares * bndPrice;
+    let qqqVal = qqqShares * qqqPrice;
+    document.getElementById('vtiVal').innerText = "$" + vtiVal.toFixed(2);
+    document.getElementById('vxusVal').innerText = "$" + vxusVal.toFixed(2);
+    document.getElementById('bndVal').innerText = "$" + bndVal.toFixed(2);
+    document.getElementById('qqqVal').innerText = "$" + qqqVal.toFixed(2);
+    let total = vtiVal + vxusVal + bndVal + qqqVal;
+    document.getElementById('totalPortfolioVal').innerText = "$" + total.toFixed(2);
+    return total;
+  }
 
-/* Loan amortization with optional extra monthly payment */
-function calcLoan(){
-  const P = parseFloat(document.getElementById('loanAmt').value) || 0;
-  const annual = parseFloat(document.getElementById('loanRate').value) || 0;
-  const n = parseInt(document.getElementById('
+  document.getElementById('updatePortfolioBtn')?.addEventListener('click', () => {
+    calcPortfolio();
+    updateNetWorthFromAssets();
+  });
 
+  // Net worth integration: assets from portfolio + spent? using simple approach: total assets from portfolio + cash? we also incorporate savings goal current
+  function updateNetWorthFromAssets() {
+    let portfolioValue = 0;
+    const v = document.getElementById('vtiShares') ? parseFloat(document.getElementById('vtiShares').value)||0 : 0;
+    const vx = document.getElementById('vxusShares') ? parseFloat(document.getElementById('vxusShares').value)||0 : 0;
+    const b = document.getElementById('bndShares') ? parseFloat(document.getElementById('bndShares').value)||0 : 0;
+    const q = document.getElementById('qqqShares') ? parseFloat(document.getElementById('qqqShares').value)||0 : 0;
+    portfolioValue = (v*245.30)+(vx*59.80)+(b*72.40)+(q*445.20);
+    let goalCurrent = parseFloat(document.getElementById('goalCurrent').value) || 0;
+    let totalAssets = portfolioValue + goalCurrent;
+    let liabilities = (parseFloat(document.getElementById('ccDebt').value) || 0) + (parseFloat(document.getElementById('mortgageDebt').value) || 0);
+    document.getElementById('totalAssets').innerText = "$" + totalAssets.toFixed(2);
+    document.getElementById('totalLiabilities').innerText = "$" + liabilities.toFixed(2);
+    let netWorth = totalAssets - liabilities;
+    document.getElementById('netWorthVal').innerText = "$" + netWorth.toFixed(2);
+  }
+
+  document.getElementById('updateNetWorthBtn')?.addEventListener('click', () => {
+    updateNetWorthFromAssets();
+  });
+
+  // 3. Loan amortization preview
+  function calcLoanAmort() {
+    let P = parseFloat(document.getElementById('loanAmt').value) || 0;
+    let annualRate = parseFloat(document.getElementById('loanRate').value) || 0;
+    let months = parseInt(document.getElementById('loanTerm').value) || 1;
+    let extra = parseFloat(document.getElementById('loanExtra').value) || 0;
+    let monthlyRate = annualRate / 100 / 12;
+    let basePayment = (P * monthlyRate * Math.pow(1+monthlyRate, months)) / (Math.pow(1+monthlyRate, months)-1);
+    if (!isFinite(basePayment)) basePayment = P/months;
+    let totalPayment = basePayment + extra;
+    document.getElementById('loanResultPreview').innerHTML = `📌 Monthly (inc extra): $${totalPayment.toFixed(2)} | Base: $${basePayment.toFixed(2)} + extra $${extra}`;
+  }
+
+  function calcEmergency() {
+    let monthly = parseFloat(document.getElementById('monthlyExpenses').value) || 0;
+    let monthsSel = parseInt(document.getElementById('monthsTarget').value);
+    let target = monthly * monthsSel;
+    document.getElementById('emergencyResult').innerHTML = `🎯 Emergency Fund Goal: $${target.toFixed(2)} (${monthsSel} months)`;
+  }
+
+  // Goal progress update
+  function updateGoalProgress() {
+    let target = parseFloat(document.getElementById('goalTarget').value) || 1;
+    let current = parseFloat(document.getElementById('goalCurrent').value) || 0;
+    let percent = Math.min(100, (current / target) * 100);
+    document.getElementById('progressFill').style.width = percent + "%";
+    document.getElementById('goalStatusMsg').innerHTML = `💰 $${current.toFixed(2)} of $${target.toFixed(2)} (${percent.toFixed(1)}%)`;
+    if (percent >= 100) document.getElementById('goalStatusMsg').style.background = "#d1fae5";
+    else document.getElementById('goalStatusMsg').style.background = "#fff0e0";
+    updateNetWorthFromAssets();
+  }
+  document.getElementById('updateGoalBtn')?.addEventListener('click', updateGoalProgress);
+
+  // Allocation Pie with colors
+  function drawAllocation() {
+    let stocks = parseFloat(document.getElementById('stockPct').value) || 0;
+    let bonds = parseFloat(document.getElementById('bondPct').value) || 0;
+    let cash = parseFloat(document.getElementById('cashPct').value) || 0;
+    let total = stocks + bonds + cash;
+    if (total !== 100 && total > 0) {
+      alert("Percentages should sum 100% — auto adjusting");
+    }
+    let svg = document.getElementById('allocPieSvg');
+    svg.innerHTML = `<circle cx="100" cy="65" r="48" fill="#e2e8f0" />`;
+    let cumulative = 0;
+    let colors = ['#0f766e', '#f97316', '#3b82f6'];
+    let data = [stocks, bonds, cash];
+    let labels = ['Stocks', 'Bonds', 'Cash'];
+    let startAng = -90;
+    for (let i=0; i<data.length; i++) {
+      let val = data[i];
+      if (val <= 0) continue;
+      let angle = (val / 100) * 360;
+      let endAng = startAng + angle;
+      let rad1 = startAng * Math.PI/180;
+      let rad2 = endAng * Math.PI/180;
+      let x1 = 100 + 48 * Math.cos(rad1);
+      let y1 = 65 + 48 * Math.sin(rad1);
+      let x2 = 100 + 48 * Math.cos(rad2);
+      let y2 = 65 + 48 * Math.sin(rad2);
+      let largeArc = angle > 180 ? 1 : 0;
+      let path = `M 100 65 L ${x1} ${y1} A 48 48 0 ${largeArc} 1 ${x2} ${y2} Z`;
+      let pathElem = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      pathElem.setAttribute("d", path);
+      pathElem.setAttribute("fill", colors[i%colors.length]);
+      pathElem.setAttribute("stroke", "white");
+      pathElem.setAttribute("stroke-width", "1.5");
+      svg.appendChild(pathElem);
+      startAng = endAng;
+    }
+    let text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    text.setAttribute("x", "100"); text.setAttribute("y", "68"); text.setAttribute("text-anchor", "middle");
+    text.setAttribute("fill", "#1e293b"); text.setAttribute("font-size", "9"); text.textContent = "mix";
+    svg.appendChild(text);
+  }
+  document.getElementById('refreshAllocBtn')?.addEventListener('click', drawAllocation);
+
+  // CSV DOWNLOAD helper
+  window.downloadCSV = function(type) {
+    let csv = "", filename = "";
+    if(type==='budget'){
+      filename = "budget-template.csv";
+      csv = "Category,Planned,Actual\nHousing,1500,1250\nFood,600,430\nTransport,320,290\nSavings,500,200\n";
+    } else if(type==='savings'){
+      filename = "savings-goal.csv";
+      csv = "Goal,Target,Current,Monthly\nVacation,5000,1200,300\nEmergency,10000,3400,500\n";
+    } else {
+      filename = "debt-tracker.csv";
+      csv = "Debt Name,Balance,Rate,Minimum\nCredit Card,2450,18.9,100\nStudent Loan,12500,5.2,200\n";
+    }
+    const blob = new Blob([csv], {type:"text/csv"});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = filename; document.body.appendChild(a); a.click(); a.remove();
+    URL.revokeObjectURL(a.href);
+  };
+
+  // initialize all
+  renderExpenseTable();
+  calcPortfolio();
+  updateNetWorthFromAssets();
+  updateGoalProgress();
+  drawAllocation();
+  document.getElementById('goalCurrent')?.addEventListener('input', updateGoalProgress);
+  document.getElementById('goalTarget')?.addEventListener('input', updateGoalProgress);
+  document.getElementById('ccDebt')?.addEventListener('input', updateNetWorthFromAssets);
+  document.getElementById('mortgageDebt')?.addEventListener('input', updateNetWorthFromAssets);
+  // additional refresh on portfolio shares
+  document.querySelectorAll('#vtiShares, #vxusShares, #bndShares, #qqqShares').forEach(inp => inp.addEventListener('input', () => { calcPortfolio(); updateNetWorthFromAssets(); }));
+</script>
+</body>
+</html>
